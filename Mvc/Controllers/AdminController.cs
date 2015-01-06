@@ -13,7 +13,7 @@ namespace Rtc.Mvc.Controllers
         public ActionResult Index()
         {
             ViewBag.SignedUpUsers = RtcDependencyResolver.GetService<IUsersService>().GetAmount();
-            ViewBag.OnlineUsers = ChatHub.UsersAmountOnline;
+            ViewBag.OnlineUsers = ChatHub.UsersOnlineCount;
             return View();
         }
 

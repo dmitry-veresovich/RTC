@@ -192,6 +192,7 @@
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\Infrastructure\ConnectionMapping.cs" />
     <Compile Include="Hubs\Infrastructure\Dialog.cs" />
+    <Compile Include="Hubs\Infrastructure\OnlineUsers.cs" />
     <Compile Include="Infrastructure\Providers\RtcMembershipProvider.cs" />
     <Compile Include="Infrastructure\Providers\RtcProfile.cs" />
     <Compile Include="Infrastructure\Providers\RtcProfileProvider.cs" />

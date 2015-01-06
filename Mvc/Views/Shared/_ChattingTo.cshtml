@@ -56,7 +56,7 @@
         <div id="message"></div>
         <br />
         @Html.TextBox("word", null, new { @class = "form-control", disabled = "true", })
-        @Html.Hidden("identity", otherUser.Email);
+        @Html.Hidden("identity", otherUser.Id);
 
     </div>
 </div>

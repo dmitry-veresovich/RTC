@@ -13,9 +13,7 @@ namespace Rtc.Mvc.Hubs
     {
         #region Private
 
-        private readonly static ConnectionMapping connections = new ConnectionMapping();
-
-        private static readonly List<int> usersOnline = new List<int>();
+        private readonly static OnlineUsers users = new OnlineUsers();
 
         private readonly IAccountService accountService = RtcDependencyResolver.GetService<IAccountService>();
 
@@ -24,23 +22,31 @@ namespace Rtc.Mvc.Hubs
         static ChatHub() { }
 
 
-
         #region Client
 
-        public void GetFriendsOnline()
+        public void ConnectToUser(int otherUserId)
         {
-            //
-        }
-     
-        public void SendWord(string word, int userToSendId)
-        {
-            //var name = Context.User.Identity.Name;
-            //var userId = userService.GetUser(name, LogInType.Email).Id;
+            var name = Context.User.Identity.Name;
+            var userId = accountService.GetAccount(name, LogInType.Email).Id;
 
-            var connectionId = connections.GetConnectionId(userToSendId);
+            users.ConnectUserToUser(userId, Context.ConnectionId, otherUserId);
+        }
+
+
+        //public void GetFriendsOnline()
+        //{
+        //    //
+        //}
+
+        public void SendWord(string word, int otherUserId)
+        {
+            var name = Context.User.Identity.Name;
+            var userId = accountService.GetAccount(name, LogInType.Email).Id;
+            var connectionId = users.GetUserConnectionId(userId, otherUserId);
             if (connectionId == null)
             {
                 //Clients.Caller.error();
+                // user is offline
             }
             else
             {
@@ -52,26 +58,21 @@ namespace Rtc.Mvc.Hubs
 
         #endregion
 
-        public static bool IsUserOnline(int id)
-        {
-            return usersOnline.Contains(id);
-        }
+        //public static bool IsUserOnline(int id)
+        //{
+        //    return false;
+        //}
 
 
-        public static int UsersAmountOnline { get { return usersOnline.Count; } }
+        public static int UsersOnlineCount { get { return users.Count; } }
 
 
         public override Task OnConnected()
         {
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            if (!usersOnline.Contains(userId))
-            {
-                usersOnline.Add(userId);
-            }
+            users.ConnectUser(userId);
 
-            //var connectionId = Context.ConnectionId;
-            //connections.Add(userId, connectionId);
             return base.OnConnected();
         }
 
@@ -79,8 +80,8 @@ namespace Rtc.Mvc.Hubs
         {
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            usersOnline.Remove(userId);
-            //connections.Remove(userId);
+            users.DisconnectUserFromUser(userId, Context.ConnectionId);
+
             return base.OnDisconnected(stopCalled);
         }
 
@@ -88,12 +89,7 @@ namespace Rtc.Mvc.Hubs
         {
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            if (!usersOnline.Contains(userId))
-            {
-                usersOnline.Add(userId);
-            }
-            //var connectionId = Context.ConnectionId;
-            //connections.Add(userId, connectionId);
+            users.ConnectUser(userId);
             return base.OnReconnected();
         }
 
