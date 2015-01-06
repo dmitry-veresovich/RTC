@@ -1,0 +1,65 @@
+﻿@using Rtc.BllInterface.Entities
+@using Rtc.Mvc.HtmlHelpers
+
+@helper PanelFor(List<UserEntity> users, string name, string title, string noUsersText, bool isExpanded = false)
+{
+    var ariaControls = "collapse" + name;
+    var id = "heading" + name;
+    var collapseClass = "panel-collapse collapse";
+    if (isExpanded == true)
+    {
+        collapseClass += " in";
+    }
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="@id">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" href="#@ariaControls" aria-expanded="@isExpanded" aria-controls="@ariaControls">
+                    @title <span class="badge" style="float: right">@users.Count</span>
+                </a>
+            </h4>
+        </div>
+        <div id="@ariaControls" class="@collapseClass" role="tabpanel" aria-labelledby="@id">
+            <div class="list-group">
+
+                @if (users.Count == 0)
+                {
+                    <div class="list-group-item">
+                        @noUsersText
+                    </div>
+                }
+                else
+                {
+                    foreach (var user in users)
+                    {
+                        <a href="javascript: changeChattingTo(@user.Id)" class="list-group-item">
+                            @Html.Image(user.Photo == null
+                                ? Url.Content("~/Content/Images/DefaultProfile.jpg")
+                                : Html.JpgImageSrc(user.Photo), "", 20)
+                            @user.Name
+                            <span class="badge" style="float: right">on</span>
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div @*style="overflow-y: scroll; height: 600px"*@>
+            @{
+                var friends = ((IEnumerable<UserEntity>)ViewBag.Friends).ToList();
+                var followYou = ((IEnumerable<UserEntity>)ViewBag.FollowYou).ToList();
+                var youFollow = ((IEnumerable<UserEntity>)ViewBag.YouFollow).ToList();
+            }
+
+            <div class="panel-group" aria-multiselectable="true">
+                @PanelFor(friends, "Friends", "Friends", "You don't have friends", true)
+                @PanelFor(followYou, "FollowYou", "Followers", "Nobody follows you")
+                @PanelFor(youFollow, "YouFollow", "You follow", "You follow nobody")
+            </div>
+        </div>
+    </div>
+</div>

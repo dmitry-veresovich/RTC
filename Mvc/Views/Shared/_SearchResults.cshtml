@@ -1,0 +1,48 @@
+﻿@using Rtc.Mvc.HtmlHelpers
+@using Rtc.Mvc.Infrastructure.Text
+@using Rtc.Mvc.ViewModels
+@model IEnumerable<SearchUsersResultItemViewModel>
+
+@Scripts.Render("~/bundles/friendAction")
+
+<div id="searchResults">
+    @{
+        if (Model == null)
+        {
+            return;
+        }
+        if (!Model.Any())
+        {
+            <hr />
+            <div>Nothing found according to your request</div>
+        }
+        else
+        {
+            foreach (var result in Model)
+            {
+                <hr />
+                <div class="row">
+                    <div class="col-md-1">
+                        @Html.Image(result.Photo == null
+                            ? Url.Content("~/Content/Images/DefaultProfile.jpg")
+                            : Html.JpgImageSrc(result.Photo), "", 70)
+                    </div>
+                    <div class="col-md-3">
+                        <div>@result.Name</div>
+                        <div>@result.Email</div>
+                        <div>+@result.PhoneNumber</div>
+                    </div>
+
+                    <div>
+                        @using (Html.BeginForm("FriendAction", "Users", FormMethod.Post))
+                        {
+                            var btnId = "btnFriendAction" + result.Id;
+                            @Html.Hidden("otherUserId", result.Id)
+                            <button class="btn btn-default btnFriendAction" id="@btnId" type="submit">@result.UserRelationsType.ToText()</button>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>

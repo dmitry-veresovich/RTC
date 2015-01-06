@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <noscript>
+        <meta http-equiv="refresh" content="0; URL=@Url.Action("BadBrowser", "Error")" />
+    </noscript>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RTC - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~bundles/modernizr")*@
+</head>
+<body>
+    <div id="content" style="display: none;">
+        <nav class="navbar navbar-default navbar-fixed-top navbar-content" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("RTC", "Index", "Home", null, new { @class = "navbar-brand" })
+                </div>
+                <div class="collapse navbar-collapse" id="navbar">
+                    @Html.Partial("_Navbar")
+                </div>
+            </div>
+        </nav>
+
+        <div class="container body-content">
+            @RenderSection("body")
+        </div>
+
+        <footer class="navbar navbar-default navbar-fixed-bottom navbar-content" role="navigation">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li>
+                        @Html.ActionLink("About", "About", "Home")
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <p class="navbar-text">&copy; @DateTime.Now.Year - Real Time Chat</p>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#content").show();
+        });
+    </script>
+</body>
+</html>

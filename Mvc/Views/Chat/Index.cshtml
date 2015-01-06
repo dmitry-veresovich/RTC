@@ -1,0 +1,30 @@
+﻿@using Rtc.BllInterface.Entities
+
+@{
+    ViewBag.Title = "Chat";
+}
+
+@section body
+{
+    <div class="container-fluid">
+        @{
+            var user = (UserEntity)ViewBag.User;
+        }
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.Partial("_FriendsBar")
+            </div>
+            <div class="col-md-9" id="chattingTo">
+                @Html.Partial("_ChatStartPage")
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    @Scripts.Render("~/bundles/chat")
+}

@@ -1,0 +1,102 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BllInterface", "BllInterface\BllInterface.csproj", "{0B78B5E1-A9D1-4193-8943-65C52B4E60A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalInterface", "DalInterface\DalInterface.csproj", "{6395DD1A-039A-4D68-8C22-F7EB327F943A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{086FFD5D-8D28-42F4-831C-A8363A7BBCDF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A} = {6395DD1A-039A-4D68-8C22-F7EB327F943A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bll", "Bll\Bll.csproj", "{53C1F827-437D-4A38-81E7-151878C18355}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A} = {6395DD1A-039A-4D68-8C22-F7EB327F943A}
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1} = {0B78B5E1-A9D1-4193-8943-65C52B4E60A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyResolver", "DependencyResolver\DependencyResolver.csproj", "{CA8B692D-30C2-490E-A37F-838735CB53E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A} = {6395DD1A-039A-4D68-8C22-F7EB327F943A}
+		{53C1F827-437D-4A38-81E7-151878C18355} = {53C1F827-437D-4A38-81E7-151878C18355}
+		{086FFD5D-8D28-42F4-831C-A8363A7BBCDF} = {086FFD5D-8D28-42F4-831C-A8363A7BBCDF}
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1} = {0B78B5E1-A9D1-4193-8943-65C52B4E60A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "Mvc\Mvc.csproj", "{CA618D15-5996-433B-B074-13F8170830F3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA8B692D-30C2-490E-A37F-838735CB53E0} = {CA8B692D-30C2-490E-A37F-838735CB53E0}
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1} = {0B78B5E1-A9D1-4193-8943-65C52B4E60A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Tests", "Mvc.Tests\Mvc.Tests.csproj", "{DF7D6614-8163-422B-9CEA-BC4489E0CC41}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dmitryveresovich.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BllInterface\\BllInterface.csproj
+		SccProjectName1 = BllInterface
+		SccLocalPath1 = BllInterface
+		SccProjectUniqueName2 = DalInterface\\DalInterface.csproj
+		SccProjectName2 = DalInterface
+		SccLocalPath2 = DalInterface
+		SccProjectUniqueName3 = Dal\\Dal.csproj
+		SccProjectName3 = Dal
+		SccLocalPath3 = Dal
+		SccProjectUniqueName4 = Bll\\Bll.csproj
+		SccProjectName4 = Bll
+		SccLocalPath4 = Bll
+		SccProjectUniqueName5 = DependencyResolver\\DependencyResolver.csproj
+		SccProjectName5 = DependencyResolver
+		SccLocalPath5 = DependencyResolver
+		SccProjectUniqueName6 = Mvc\\Mvc.csproj
+		SccProjectName6 = Mvc
+		SccLocalPath6 = Mvc
+		SccProjectUniqueName7 = Mvc.Tests\\Mvc.Tests.csproj
+		SccProjectName7 = Mvc.Tests
+		SccLocalPath7 = Mvc.Tests
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B78B5E1-A9D1-4193-8943-65C52B4E60A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6395DD1A-039A-4D68-8C22-F7EB327F943A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{086FFD5D-8D28-42F4-831C-A8363A7BBCDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{086FFD5D-8D28-42F4-831C-A8363A7BBCDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{086FFD5D-8D28-42F4-831C-A8363A7BBCDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{086FFD5D-8D28-42F4-831C-A8363A7BBCDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C1F827-437D-4A38-81E7-151878C18355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C1F827-437D-4A38-81E7-151878C18355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C1F827-437D-4A38-81E7-151878C18355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C1F827-437D-4A38-81E7-151878C18355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8B692D-30C2-490E-A37F-838735CB53E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8B692D-30C2-490E-A37F-838735CB53E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8B692D-30C2-490E-A37F-838735CB53E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8B692D-30C2-490E-A37F-838735CB53E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA618D15-5996-433B-B074-13F8170830F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA618D15-5996-433B-B074-13F8170830F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA618D15-5996-433B-B074-13F8170830F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA618D15-5996-433B-B074-13F8170830F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF7D6614-8163-422B-9CEA-BC4489E0CC41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7D6614-8163-422B-9CEA-BC4489E0CC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7D6614-8163-422B-9CEA-BC4489E0CC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7D6614-8163-422B-9CEA-BC4489E0CC41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,62 @@
+﻿@using Rtc.BllInterface.Entities
+@using Rtc.Mvc.HtmlHelpers
+@using Rtc.Mvc.Infrastructure.Text
+@using Rtc.Mvc.ViewModels
+
+@{
+    var otherUser = ViewBag.OtherUser as SearchUsersResultItemViewModel;
+    var user = ViewBag.User as UserEntity;
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-1">
+                @Html.Image(otherUser.Photo == null
+                    ? Url.Content("~/Content/Images/DefaultProfile.jpg")
+                    : Html.JpgImageSrc(otherUser.Photo), "", 70)
+            </div>
+            <div class="col-md-3">
+                <div>@otherUser.Name</div>
+                <div>@otherUser.Email</div>
+                <div>+@otherUser.PhoneNumber</div>
+            </div>
+            <div>
+                @using (Html.BeginForm("FriendAction", "Users", FormMethod.Post))
+                {
+                    @Html.Hidden("OtherUserId", otherUser.Id);
+                    <button class="btn btn-default" type="submit">@otherUser.UserRelationsType.ToText()</button>
+                }
+            </div>
+        </div>
+
+        <br />
+
+        <h4>His messages will appear here</h4>
+
+        <div id="friendMessage"></div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-1">
+                @Html.Image(user.Photo == null
+                    ? Url.Content("~/Content/Images/DefaultProfile.jpg")
+                    : Html.JpgImageSrc(user.Photo), "", 70)
+            </div>
+            <div class="col-md-3">
+                <div>@user.Name</div>
+                <div>@user.Email</div>
+                <div>+@user.PhoneNumber</div>
+            </div>
+        </div>
+
+        <br />
+        <h4>Start chatting here</h4>
+        <div id="message"></div>
+        <br />
+        @Html.TextBox("word", null, new { @class = "form-control", disabled = "true", })
+        @Html.Hidden("identity", otherUser.Email);
+
+    </div>
+</div>

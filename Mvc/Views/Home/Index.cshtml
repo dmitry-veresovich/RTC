@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Welcome";
+}
+@section body {
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>
+                Welcome to <br>Real Time Chat!
+            </h1>
+            <br />
+            @Html.ActionLink("Log in", "LogIn", "Account", null, new { @class = "btn btn-default btn-lg" })
+            @Html.ActionLink("Sign up", "SignUp", "Account", null, new { @class = "btn btn-default btn-lg" })
+        </div>
+    </div>
+}

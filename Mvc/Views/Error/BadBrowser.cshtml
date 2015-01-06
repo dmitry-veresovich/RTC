@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bad browser</title>
+</head>
+<body>
+    <div align="center">
+
+        <h1>Bad browser.</h1>
+        <h2>Your browser does not seem to support javascript.</h2>
+        <h4>Or you're too lazy to turn it on!</h4>
+        <h2>Please, <b>TURN THE JAVASCRIPT ON AND PRESS</b></h2>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <button type="submit">THIS BUTTON</button>
+        }
+    </div>
+
+</body>
+</html>
