@@ -23,7 +23,7 @@
             name = profile.Name;
         }
             }
-            <p class="navbar-text">Welcome, @Html.ActionLink(name, "Manage", "Account")!</p>
+            <p class="navbar-text">Welcome, @Html.ActionLink(name, "Index", "Manage")!</p>
         </li>
         <li>
             @using (Html.BeginForm("LogOut", "Account", FormMethod.Post))

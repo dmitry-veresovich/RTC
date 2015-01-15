@@ -5,7 +5,7 @@ namespace Rtc.Bll.Mappers
 {
     public static class UserMapper
     {
-        public static UserDto ToDto(this UserEntity user, string password)
+        public static UserDto ToDto(this UserEntity user, string password = null)
         {
             if (user == null)
                 return null;

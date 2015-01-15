@@ -44,6 +44,10 @@ namespace Rtc.Mvc
             bundles.Add(new ScriptBundle("~/bundles/chat").Include(
                 "~/Scripts/chat.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/manage").Include(
+                "~/Scripts/manage.js"));
+
+
         }
     }
 }

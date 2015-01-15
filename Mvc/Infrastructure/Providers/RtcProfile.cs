@@ -35,6 +35,12 @@ namespace Rtc.Mvc.Infrastructure.Providers
             set { base[GetCallerName()] = value; }
         }
 
+        public byte[] Photo
+        {
+            get { return base[GetCallerName()] as byte[]; }
+            set { base[GetCallerName()] = value; }
+        }
+
         private static string GetCallerName([CallerMemberName] string name = null)
         {
             return name;

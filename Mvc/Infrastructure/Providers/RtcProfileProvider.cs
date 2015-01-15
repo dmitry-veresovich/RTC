@@ -40,8 +40,8 @@ namespace Rtc.Mvc.Infrastructure.Providers
             var email = (string)context["UserName"];
             if (string.IsNullOrEmpty(email) || collection.Count < 1)
                 return;
-            var userService = RtcDependencyResolver.GetService<IAccountService>();
-            var user = userService.GetAccount(email, LogInType.Email);
+            var accountService = RtcDependencyResolver.GetService<IAccountService>();
+            var user = accountService.GetAccount(email, LogInType.Email);
             if (user == null)
                 return;
 

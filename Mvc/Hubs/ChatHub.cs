@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Rtc.BllInterface.Services;
 using Rtc.BllInterface.VO;

@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Helpers;
+﻿using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using Rtc.BllInterface.Entities;
@@ -71,21 +70,28 @@ namespace Rtc.Mvc.Controllers
                 ModelState.AddModelError("PhoneNumber", "There is a user with such phone number.");
                 flag = true;
             }
+            if (model.Photo != null && model.Photo.ContentType != "image/jpeg")
+            {
+                ModelState.AddModelError("", "Only .jpg photos are allowed.");
+                flag = true;
+            }
             if (flag)
             {
                 return View(model);
             }
 
             var roleService = RtcDependencyResolver.GetService<IRoleService>();
-            var role = roleService.GetRole("user");
+            var userRoleName = WebConfigReader.GetRoleName("user");
+            var role = roleService.GetRole(userRoleName);
             if (role == null)
             {
-                roleService.CreateRole(new RoleEntity { Name = "user" });
-                role = roleService.GetRole("user");
+                roleService.CreateRole(new RoleEntity { Name = userRoleName });
+                role = roleService.GetRole(userRoleName);
             }
-            // TODO: user should be in config file
+ 
+            
 
-            var userEntity = model.ToEntity(role.Id, LoadPhoto(model.Photo));
+            var userEntity = model.ToEntity(role.Id, PhotoLoader.Load(model.Photo));
 
             var provider = (RtcMembershipProvider)Membership.Provider;
             if (provider.CreateUser(userEntity, Crypto.HashPassword(model.Password)) != null)
@@ -96,24 +102,6 @@ namespace Rtc.Mvc.Controllers
             ModelState.AddModelError("", "Registration error. Try again later.");
             return View(model);
         }
-
-       
-
-        [HttpGet]
-        public ActionResult Manage()
-        {
-            var profile = Profile as RtcProfile;
-            return View(profile);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Manage(SignUpViewModel model)
-        {
-            //
-            return View();
-        }
-
 
         [HttpPost]
         public ActionResult LogOut()
@@ -133,15 +121,6 @@ namespace Rtc.Mvc.Controllers
         {
             return RedirectToAction("Index", "Chat");
         }
-
-        private static byte[] LoadPhoto(HttpPostedFileBase file)
-        {
-            if (file == null) return null;
-            var photo = new byte[file.ContentLength];
-            file.InputStream.Read(photo, 0, file.ContentLength);
-            return photo;
-        }
-
 
         #endregion
 

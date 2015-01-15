@@ -13,7 +13,7 @@ function changeChattingTo(id) {
         $('#chattingTo').empty().append(response);
         setUpChatting();
     });
-    window.chat.server.connectToUser(id);  
+    window.chat.server.connectToUser(id);
 }
 
 function setUpChatting() {

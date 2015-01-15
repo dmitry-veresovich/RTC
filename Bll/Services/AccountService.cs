@@ -20,7 +20,6 @@ namespace Rtc.Bll.Services
         {
             this.uow = uow;
             this.repository = repository;
-            //Debug.WriteLine("service create!");
         }
 
         #endregion
@@ -29,8 +28,41 @@ namespace Rtc.Bll.Services
         {
             user.PhoneNumber = Extentions.NormalizePhoneNumber(user.PhoneNumber);
             user.Email = user.Email.ToLower();
+            user.Name = user.Name.Trim();
             var dto = user.ToDto(hashedPassword);
             repository.Create(dto);
+            uow.Commit();
+        }
+
+        public void UpdateName(string logInToken, string newName, LogInType logInType)
+        {
+            var userDto = repository.GetFirstOrDefault(GetLogInPredicate(logInToken, logInType));
+            userDto.Name = newName.Trim();
+            repository.Update(userDto);
+            uow.Commit();
+        }
+
+        public void UpdateEmail(string logInToken, string newEmal, LogInType logInType)
+        {
+            var userDto = repository.GetFirstOrDefault(GetLogInPredicate(logInToken, logInType));
+            userDto.Email = newEmal.ToLower();
+            repository.Update(userDto);
+            uow.Commit();
+        }
+
+        public void UpdatePhoneNumber(string logInToken, string newPhoneNumber, LogInType logInType)
+        {
+            var userDto = repository.GetFirstOrDefault(GetLogInPredicate(logInToken, logInType));
+            userDto.PhoneNumber = Extentions.NormalizePhoneNumber(newPhoneNumber);
+            repository.Update(userDto);
+            uow.Commit();
+        }
+
+        public void UpdatePhoto(string logInToken, byte[] photo, LogInType logInType)
+        {
+            var userDto = repository.GetFirstOrDefault(GetLogInPredicate(logInToken, logInType));
+            userDto.Photo = photo;
+            repository.Update(userDto);
             uow.Commit();
         }
 
@@ -64,12 +96,15 @@ namespace Rtc.Bll.Services
 
         public void SetHashedPassword(string logInToken, string newHashedPassword)
         {
-            throw new NotImplementedException();
+            SetHashedPassword(logInToken, newHashedPassword, Extentions.GetLogInType(logInToken));
         }
 
         public void SetHashedPassword(string logInToken, string newHashedPassword, LogInType logInType)
         {
-            throw new NotImplementedException();
+            var userDto = repository.GetFirstOrDefault(GetLogInPredicate(logInToken, logInType));
+            userDto.Password = newHashedPassword;
+            repository.Update(userDto);
+            uow.Commit();
         }
 
         public bool AccountExists(string logInToken)
@@ -82,25 +117,6 @@ namespace Rtc.Bll.Services
             var predicate = GetLogInPredicate(logInToken, logInType);
             return repository.GetFirstOrDefault(predicate) != null;
         }
-
-        //public IEnumerable<UserEntity> GetAllUsers()
-        //{
-        //    return repository.GetAll().Select(user => user.ToUserEntity());
-        //}
-
-        //public UserEntity GetUserById(int id)
-        //{
-        //    return userRepository.Get(id).ToUserEntity();
-        //}
-
-        //public IEnumerable<UserEntity> GetUsersById(IEnumerable<int> usersIds)
-        //{
-        //    return
-        //        userRepository.GetAll()
-        //            .Join(usersIds, user => user.Id, userId => userId, (user, i) => user)
-        //            .Select(userDto => userDto.ToUserEntity());
-        //}
-
 
         #region Private
 

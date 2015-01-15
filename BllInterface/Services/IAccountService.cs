@@ -7,6 +7,14 @@ namespace Rtc.BllInterface.Services
     {
         void CreateAccount(UserEntity user, string hashedPassword);
 
+        void UpdateName(string logInToken, string newName, LogInType logInType);
+
+        void UpdateEmail(string logInToken, string newEmal, LogInType logInType);
+
+        void UpdatePhoneNumber(string logInToken, string phoneNumber, LogInType logInType);
+
+        void UpdatePhoto(string logInToken, byte[] photo, LogInType logInType);
+
 
         UserEntity GetAccount(int id);
 
