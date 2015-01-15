@@ -1,23 +1,24 @@
 ﻿using Rtc.BllInterface.Entities;
+using Rtc.BllInterface.VO;
 using Rtc.Mvc.ViewModels;
 
 namespace Rtc.Mvc.Mappers
 {
     public static class UserMapper
     {
-        public static UserEntity ToEntity(this SignUpViewModel model, int roleId, byte[] photo)
+        public static UserViewModel ToViewModel(this UserEntity user, UserRelationsType userRelationsType)
         {
-            if (model == null)
-                return null;
-            return new UserEntity
+            return new UserViewModel
             {
-                Email = model.Email,
-                Name = model.Name,
-                PhoneNumber = model.PhoneNumber,
-                Photo = photo,
-                RoleId = roleId,  
+                Id = user.Id,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                Photo = user.Photo,
+                UserRelationsType = userRelationsType,
             };
         }
+
 
     }
 }

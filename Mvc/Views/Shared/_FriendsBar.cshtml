@@ -1,7 +1,7 @@
-﻿@using Rtc.BllInterface.Entities
-@using Rtc.Mvc.HtmlHelpers
+﻿@using Rtc.Mvc.HtmlHelpers
+@using Rtc.Mvc.ViewModels
 
-@helper PanelFor(List<UserEntity> users, string name, string title, string noUsersText, bool isExpanded = false)
+@helper PanelFor(List<UserBarViewModel> users, string name, string title, string noUsersText, bool isExpanded = false)
 {
     var ariaControls = "collapse" + name;
     var id = "heading" + name;
@@ -30,14 +30,29 @@
                 }
                 else
                 {
-                    foreach (var user in users)
+                    if (name == "Friends")
                     {
-                        <a href="javascript: changeChattingTo(@user.Id)" class="list-group-item">
-                            @Html.Image(user.Photo == null
+                        foreach (var user in users)
+                        {
+                            <a onclick="changeChattingTo(@user.Id, true)" class="list-group-item">
+                                @Html.Image(user.Photo == null
                                 ? Url.Content("~/Content/Images/DefaultProfile.jpg")
                                 : Html.JpgImageSrc(user.Photo), "", 20)
-                            @user.Name
-                        </a>
+                                @user.Name
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var user in users)
+                        {
+                            <a onclick="changeChattingTo(@user.Id, false)" class="list-group-item">
+                                @Html.Image(user.Photo == null
+                                ? Url.Content("~/Content/Images/DefaultProfile.jpg")
+                                : Html.JpgImageSrc(user.Photo), "", 20)
+                                @user.Name
+                            </a>
+                        }
                     }
                 }
             </div>
@@ -49,9 +64,9 @@
     <div class="panel-body">
         <div @*style="overflow-y: scroll; height: 600px"*@>
             @{
-                var friends = ((IEnumerable<UserEntity>)ViewBag.Friends).ToList();
-                var followYou = ((IEnumerable<UserEntity>)ViewBag.FollowYou).ToList();
-                var youFollow = ((IEnumerable<UserEntity>)ViewBag.YouFollow).ToList();
+                var friends = ((IEnumerable<UserBarViewModel>)ViewBag.Friends).ToList();
+                var followYou = ((IEnumerable<UserBarViewModel>)ViewBag.FollowYou).ToList();
+                var youFollow = ((IEnumerable<UserBarViewModel>)ViewBag.YouFollow).ToList();
             }
 
             <div class="panel-group" aria-multiselectable="true">

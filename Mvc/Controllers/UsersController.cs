@@ -43,7 +43,7 @@ namespace Rtc.Mvc.Controllers
                 return RedirectToAction("BadBrowser", "Error");
             }
 
-            IEnumerable<SearchUsersResultItemViewModel> searchResults;
+            IEnumerable<UserViewModel> searchResults;
             if (string.IsNullOrWhiteSpace(model.SearchToken))
             {
                 searchResults = null;

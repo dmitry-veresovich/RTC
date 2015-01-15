@@ -192,8 +192,7 @@
     <Compile Include="App_Start\DependencyResolverConfig.cs" />
     <Compile Include="HtmlHelpers\ImageHelper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
-    <Compile Include="Hubs\Infrastructure\ConnectionMapping.cs" />
-    <Compile Include="Hubs\Infrastructure\Dialog.cs" />
+    <Compile Include="Hubs\Infrastructure\UserInfo.cs" />
     <Compile Include="Hubs\Infrastructure\OnlineUsers.cs" />
     <Compile Include="Infrastructure\PhotoLoader.cs" />
     <Compile Include="Infrastructure\WebConfigReader.cs" />
@@ -204,19 +203,22 @@
     <Compile Include="Infrastructure\RtcDependencyResolver.cs" />
     <Compile Include="Infrastructure\Text\TextHelper.cs" />
     <Compile Include="Infrastructure\Validation\LogInTokenAttribute.cs" />
+    <Compile Include="Mappers\LoggedInUserMapper.cs" />
     <Compile Include="Mappers\SearchUserKindMapper.cs" />
-    <Compile Include="Mappers\SearchUsersResultItemMapper.cs" />
+    <Compile Include="Mappers\UserBarMapper.cs" />
     <Compile Include="Mappers\UserMapper.cs" />
+    <Compile Include="Mappers\SignUpMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\LoggedInUserViewModel.cs" />
     <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModel.cs" />
     <Compile Include="ViewModels\SearchUsersKindViewModel.cs" />
-    <Compile Include="ViewModels\SearchUsersResultItemViewModel.cs" />
+    <Compile Include="ViewModels\UserBarViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\SearchUsersViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
-    <Compile Include="ViewModels\UserRelationsType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RTCDB.mdf" />

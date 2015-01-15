@@ -19,7 +19,10 @@ namespace Rtc.Mvc.Hubs
         #endregion
 
         static ChatHub() { }
-
+        public static bool IsUserOnline(int id)
+        {
+            return users.IsUserConnected(id);
+        }
 
         #region Client
 
@@ -28,7 +31,7 @@ namespace Rtc.Mvc.Hubs
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
 
-            users.ConnectUserToUser(userId, Context.ConnectionId, otherUserId);
+            users.ConnectUserToUser(userId, otherUserId);
         }
 
 
@@ -39,13 +42,12 @@ namespace Rtc.Mvc.Hubs
 
         public void SendWord(string word, int otherUserId)
         {
-            var name = Context.User.Identity.Name;
-            var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            var connectionId = users.GetUserConnectionId(userId, otherUserId);
+            var connectionId = users.GetUserConnectionId(otherUserId);
             if (connectionId == null)
             {
-                //Clients.Caller.error();
-                // user is offline
+                var name = Context.User.Identity.Name;
+                var userId = accountService.GetAccount(name, LogInType.Email).Id;
+                Clients.Client(users.GetUserConnectionId(userId)).userIsOffline();
             }
             else
             {
@@ -53,14 +55,14 @@ namespace Rtc.Mvc.Hubs
             }
         }
 
+        public void ChechkUserOnline(int userId)
+        {
+
+        }
+
 
 
         #endregion
-
-        //public static bool IsUserOnline(int id)
-        //{
-        //    return false;
-        //}
 
 
         public static int UsersOnlineCount { get { return users.Count; } }
@@ -70,26 +72,24 @@ namespace Rtc.Mvc.Hubs
         {
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            users.ConnectUser(userId);
-
+            users.ConnectUser(userId, Context.ConnectionId);
             return base.OnConnected();
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            var name = Context.User.Identity.Name;
-            var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            users.DisconnectUserFromUser(userId, Context.ConnectionId);
-
-            return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
             var name = Context.User.Identity.Name;
             var userId = accountService.GetAccount(name, LogInType.Email).Id;
-            users.ConnectUser(userId);
+            users.ConnectUser(userId, Context.ConnectionId);
             return base.OnReconnected();
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var name = Context.User.Identity.Name;
+            var userId = accountService.GetAccount(name, LogInType.Email).Id;
+            users.DisconnectUser(userId);
+            return base.OnDisconnected(stopCalled);
         }
 
     }

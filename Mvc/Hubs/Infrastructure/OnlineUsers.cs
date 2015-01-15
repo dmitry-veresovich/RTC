@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Rtc.Mvc.Hubs.Infrastructure
 {
     public class OnlineUsers
     {
-        private readonly Dictionary<int, Dictionary<string, int>> users;
+        private readonly Dictionary<int, UserInfo> users;
         private readonly object locker;
 
         public OnlineUsers()
         {
-            users = new Dictionary<int, Dictionary<string, int>>();
+            users = new Dictionary<int, UserInfo>();
             locker = new object();
         }
 
@@ -20,41 +19,52 @@ namespace Rtc.Mvc.Hubs.Infrastructure
         }
 
 
-        public void ConnectUser(int userId)
+        public void ConnectUser(int userId, string connectionId)
         {
             lock (locker)
             {
-                if (IsUserConnected(userId)) return;
-                var userInfo = new Dictionary<string, int>();
-                users.Add(userId, userInfo);
+                if (IsUserConnected(userId))
+                {
+                    users[userId].ConnectionId = connectionId;
+                }
+                else
+                {
+                    var userInfo = new UserInfo(connectionId);
+                    users.Add(userId, userInfo);
+                }
             }
         }
 
-        public void ConnectUserToUser(int userId, string connectionId, int otherUserId)
+        public void ConnectUserToUser(int userId, int otherUserId)
         {
             lock (locker)
             {
                 var userInfo = users[userId];
-                userInfo[connectionId] = otherUserId;
+                userInfo.ConnectedUserId = otherUserId;
             }
         }
 
-        public void DisconnectUserFromUser(int userId, string connectionId)
+        public void DisconnectUserFromUsers(int userId)
         {
             lock (locker)
             {
-                users[userId].Remove(connectionId);
+                users[userId].ConnectedUserId = null;
             }
         }
 
-        public string GetUserConnectionId(int userId, int otherUserId)
+        public void DisconnectUser(int userId)
         {
-            var userInfo = users[otherUserId];
-            return (from pair in userInfo where pair.Value == userId select pair.Key).FirstOrDefault();
+            lock (locker)
+            {
+                users.Remove(userId);
+            }
         }
 
 
-
+        public string GetUserConnectionId(int userId)
+        {
+            return IsUserConnected(userId) ? users[userId].ConnectionId : null;
+        }
 
         public int Count
         {

@@ -1,17 +1,17 @@
-﻿@using Rtc.BllInterface.Entities
+﻿@using Rtc.BllInterface.VO
 @using Rtc.Mvc.HtmlHelpers
 @using Rtc.Mvc.Infrastructure.Text
 @using Rtc.Mvc.ViewModels
 
 @{
-    var otherUser = ViewBag.OtherUser as SearchUsersResultItemViewModel;
-    var user = ViewBag.User as UserEntity;
+    var otherUser = ViewBag.OtherUser as UserViewModel;
+    var user = ViewBag.User as LoggedInUserViewModel;
 }
 
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 @Html.Image(otherUser.Photo == null
                     ? Url.Content("~/Content/Images/DefaultProfile.jpg")
                     : Html.JpgImageSrc(otherUser.Photo), "", 70)
@@ -24,8 +24,8 @@
             <div>
                 @using (Html.BeginForm("FriendAction", "Users", FormMethod.Post))
                 {
-                    @Html.Hidden("OtherUserId", otherUser.Id);
-                    <button class="btn btn-default" type="submit">@otherUser.UserRelationsType.ToText()</button>
+                    @Html.Hidden("otherUserId", otherUser.Id);
+                    <button class="btn btn-default" id="btnFriendAction" type="submit">@otherUser.UserRelationsType.ToText()</button>
                 }
             </div>
         </div>
@@ -39,7 +39,7 @@
         <hr />
 
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 @Html.Image(user.Photo == null
                     ? Url.Content("~/Content/Images/DefaultProfile.jpg")
                     : Html.JpgImageSrc(user.Photo), "", 70)
@@ -52,11 +52,19 @@
         </div>
 
         <br />
-        <h4>Start chatting here</h4>
-        <div id="message"></div>
-        <br />
-        @Html.TextBox("word", null, new { @class = "form-control", disabled = "true", })
-        @Html.Hidden("identity", otherUser.Id);
 
+        @if (otherUser.UserRelationsType == UserRelationsType.Friends)
+        {
+            <h4>Start chatting here</h4>
+            <div id="message"></div>
+            <br />
+            @Html.TextBox("word", null, new { @class = "form-control", disabled = "true", })
+            @Html.Hidden("identity", otherUser.Id)
+            ;
+        }
+        else
+        {
+            <h4>You're not friends yet (: To start chatting do your best to become ones.</h4>
+        }
     </div>
 </div>

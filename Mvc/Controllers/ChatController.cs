@@ -40,7 +40,7 @@ namespace Rtc.Mvc.Controllers
             // TODO: chat
 
             var user = accountService.GetAccount(Profile.UserName, LogInType.Email);
-            ViewBag.User = user;
+            ViewBag.User = user.ToViewModel();
             ViewBag.OtherUser = accountService.GetAccount(id).ToViewModel(userFriendService.GetUserRelationsType(user.Id, id));
             return PartialView("_ChattingTo");
         }
@@ -51,9 +51,9 @@ namespace Rtc.Mvc.Controllers
 
         private void SetUpFriendsPartial(int id)
         {
-            ViewBag.Friends = userFriendService.GetFriends(id);
-            ViewBag.FollowYou = userFriendService.GetUsersFollowYou(id);
-            ViewBag.YouFollow = userFriendService.GetUsersYouFollow(id);
+            ViewBag.Friends = userFriendService.GetFriends(id).ToViewModel();
+            ViewBag.FollowYou = userFriendService.GetUsersFollowYou(id).ToViewModel();
+            ViewBag.YouFollow = userFriendService.GetUsersYouFollow(id).ToViewModel();
         }
 
         #endregion

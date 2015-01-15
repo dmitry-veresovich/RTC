@@ -12,11 +12,11 @@ namespace Rtc.Mvc.Infrastructure.Text
             {
                 case UserRelationsType.Friends:
                     {
-                        relation = "Unfriend";
+                        relation = "Break up";
                         break;
                     }
                 case UserRelationsType.FollowsYou:
-                    relation = "Friend";
+                    relation = "Confirm as friend";
                     break;
                 case UserRelationsType.YouFollow:
                     relation = "Unfollow";

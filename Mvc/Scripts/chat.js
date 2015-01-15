@@ -6,14 +6,18 @@
     $.connection.hub.start();
 });
 
-function changeChattingTo(id) {
+function changeChattingTo(id, startChat) {
     var data = "Id=" + id;
     var url = "/Chat/ChattingTo";
     $.post(url, data, function (response) {
         $('#chattingTo').empty().append(response);
-        setUpChatting();
+        if (startChat)
+            setUpChatting();
+        $("#btnFriendAction").click(onSubmitForm);
     });
-    window.chat.server.connectToUser(id);
+    if (startChat) {
+        window.chat.server.connectToUser(id);
+    }
 }
 
 function setUpChatting() {
@@ -53,4 +57,23 @@ function htmlEncode(value) {
 
 function isStringEmpty(s) {
     return !s.trim();
+};
+
+
+function onSubmitForm() {
+    var form = $(this).closest('form');
+    var serialized = form.serialize();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data = JSON.parse(xmlhttp.responseText);
+            $('#btnFriendAction').text(data.text);
+        }
+    };
+    xmlhttp.open("POST", "/Users/FriendAction", true);
+    xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xmlhttp.setRequestHeader("Accept", "json");
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send(serialized);
+    return false;
 };
