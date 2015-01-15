@@ -18,15 +18,6 @@ namespace Rtc.Mvc
 
             RegisterPageBundles(bundles);
 
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-{version}"));
-
-
-            //bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
-            //    "~/Scripts/jquery.signalR-{version}.js",
-            //    "~/signalr/hubs"));
-
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css",
@@ -35,6 +26,9 @@ namespace Rtc.Mvc
 
         private static void RegisterPageBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/layout").Include(
+                "~/Scripts/layout.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/search").Include(
                 "~/Scripts/search.js"));
 

@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RTC - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @*@Scripts.Render("~bundles/modernizr")*@
 </head>
 <body>
     <div id="content" style="display: none;">
@@ -49,13 +48,10 @@
         </footer>
 
         @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/layout")
         @Scripts.Render("~/bundles/bootstrap")
+
         @RenderSection("scripts", required: false)
     </div>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#content").show();
-        });
-    </script>
 </body>
 </html>
