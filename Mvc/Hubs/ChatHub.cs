@@ -12,7 +12,7 @@ namespace Rtc.Mvc.Hubs
     {
         #region Private
 
-        private readonly static OnlineUsers users = new OnlineUsers();
+        private static readonly OnlineUsers users = new OnlineUsers();
 
         private readonly IAccountService accountService = RtcDependencyResolver.GetService<IAccountService>();
 
@@ -34,20 +34,14 @@ namespace Rtc.Mvc.Hubs
             users.ConnectUserToUser(userId, otherUserId);
         }
 
-
-        //public void GetFriendsOnline()
-        //{
-        //    //
-        //}
-
         public void SendWord(string word, int otherUserId)
         {
             var connectionId = users.GetUserConnectionId(otherUserId);
             if (connectionId == null)
             {
-                var name = Context.User.Identity.Name;
-                var userId = accountService.GetAccount(name, LogInType.Email).Id;
-                Clients.Client(users.GetUserConnectionId(userId)).userIsOffline();
+                //var name = Context.User.Identity.Name;
+                //var userId = accountService.GetAccount(name, LogInType.Email).Id;
+                //Clients.Client(users.GetUserConnectionId(userId)).userIsOffline();
             }
             else
             {
@@ -55,10 +49,10 @@ namespace Rtc.Mvc.Hubs
             }
         }
 
-        public void ChechkUserOnline(int userId)
-        {
+        //public void ChechkUserOnline(int userId)
+        //{
 
-        }
+        //}
 
 
 

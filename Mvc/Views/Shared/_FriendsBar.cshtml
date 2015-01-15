@@ -39,6 +39,7 @@
                                 ? Url.Content("~/Content/Images/DefaultProfile.jpg")
                                 : Html.JpgImageSrc(user.Photo), "", 20)
                                 @user.Name
+                                <span class="badge" style="float: right">@(user.IsOnline ? "on" : "off")</span>
                             </a>
                         }
                     }
@@ -51,6 +52,7 @@
                                 ? Url.Content("~/Content/Images/DefaultProfile.jpg")
                                 : Html.JpgImageSrc(user.Photo), "", 20)
                                 @user.Name
+                                <span class="badge" style="float: right">@(user.IsOnline ? "on" : "off")</span>
                             </a>
                         }
                     }
