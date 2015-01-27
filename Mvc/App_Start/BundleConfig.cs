@@ -10,13 +10,16 @@ namespace Rtc.Mvc
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-            "~/Scripts/jquery.unobtrusive*",
-            "~/Scripts/jquery.validate*"));
+                "~/Scripts/jquery.unobtrusive*",
+                "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/signalR").Include(
+                        "~/Scripts/jquery.signalR-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js"));
 
-            RegisterPageBundles(bundles);
+            RegisterAppScripts(bundles);
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
@@ -24,22 +27,22 @@ namespace Rtc.Mvc
                 "~/Content/Site.css"));
         }
 
-        private static void RegisterPageBundles(BundleCollection bundles)
+        private static void RegisterAppScripts(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/layout").Include(
-                "~/Scripts/layout.js"));
+                "~/Scripts/app/layout.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/search").Include(
-                "~/Scripts/search.js"));
+                "~/Scripts/app/search.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/friendAction").Include(
-                "~/Scripts/friendAction.js"));
+                "~/Scripts/app/friendAction.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/chat").Include(
-                "~/Scripts/chat.js"));
+                "~/Scripts/app/chat.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/manage").Include(
-                "~/Scripts/manage.js"));
+                "~/Scripts/app/manage.js"));
 
 
         }
