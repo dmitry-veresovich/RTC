@@ -2,18 +2,22 @@
 
 <div class="row">
     <div class="col-md-8">
-        <section id="signUpForm">
+        <section id="signUpSection">
             @using (Html.BeginForm("SignUp", "Account", new { ViewBag.ReturnUrl, }, FormMethod.Post, new
             {
                 @class = "form-horizontal",
                 role = "form",
                 enctype = "multipart/form-data",
+                id = "signUpForm",
             }))
             {
                 @Html.AntiForgeryToken()
                 <h4>It's time to quickly create an account.</h4>
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                
+                <div id="validSum">
+                    <ul class="text-danger"></ul>
+                </div>
 
                 <div class="form-group">
                     @Html.Label("Photo", new { @class = "col-md-3 control-label" })
@@ -60,7 +64,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-6">
-                        <input type="submit" value="Sign up" class="btn btn-default" />
+                        <button type="submit" class="btn btn-default" data-loading-text="Signing up..." id="submitBtn">Sign up</button>
                     </div>
                 </div>
             }

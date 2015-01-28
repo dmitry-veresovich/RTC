@@ -2,18 +2,21 @@
 
 <div class="row">
     <div class="col-md-8">
-        <section id="loginForm">
+        <section id="loginSection">
             @using (Html.BeginForm("LogIn", "Account", new { ViewBag.ReturnUrl, }, FormMethod.Post, new
             {
                 @class = "form-horizontal",
                 role = "form",
+                id = "logInForm",
             }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Your friends are waiting for you.</h4>
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+                <div id="validSum">
+                    <ul class="text-danger"></ul>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.LogInToken, new { @class = "col-md-4 control-label" })
                     <div class="col-md-5">
@@ -29,14 +32,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-4 col-md-1">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                    <div class="checkbox col-md-4">
+                        @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-8" })
+                        @Html.CheckBoxFor(m => m.RememberMe, new { @class = "col-md-1" })
                     </div>
-                    <div class="col-md-6">
-                        <div class="checkbox">
-                            @Html.LabelFor(m => m.RememberMe, new { @class = "col-md-6" })
-                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "col-md-1" })
-                        </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-default" data-loading-text="Signing in..." id="submitBtn">Log in</button>
                     </div>
                 </div>
             }

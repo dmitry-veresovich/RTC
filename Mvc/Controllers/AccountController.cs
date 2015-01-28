@@ -1,4 +1,6 @@
-﻿using System.Web.Helpers;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Security;
 using Rtc.BllInterface.Entities;
@@ -27,46 +29,42 @@ namespace Rtc.Mvc.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogIn(LogInViewModel model, string returnUrl)
+        public JsonResult LogIn(LogInViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-                return RedirectToHome();
-            if (Membership.ValidateUser(model.LogInToken, model.Password))
+            if (ModelState.IsValid)
             {
-                var userName = accountService.GetAccount(model.LogInToken).Email;
-                FormsAuthentication.SetAuthCookie(userName, model.RememberMe);
-                return RedirectToHome();
+                if (Membership.ValidateUser(model.LogInToken, model.Password))
+                {
+                    var userName = accountService.GetAccount(model.LogInToken).Email;
+                    FormsAuthentication.SetAuthCookie(userName, model.RememberMe);
+                    return Json(new { success = true, redirect = returnUrl });
+                }
+                ModelState.AddModelError("", "Wrong email or phone number and / or password.");
             }
-            ModelState.AddModelError("", "Wrong email or phone number and / or password.");
-            return RedirectToHome();
+            return Json(new { errors = GetErrorsFromModelState() });
         }
 
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SignUp(SignUpViewModel model)
+        public JsonResult SignUp(SignUpViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
-                return RedirectToHome();
-            var flag = false;
+                return Json(new { errors = GetErrorsFromModelState() });
             if (accountService.AccountExists(model.Email, LogInType.Email))
             {
-                ModelState.AddModelError("Email", "There is a user with such email.");
-                flag = true;
+                ModelState.AddModelError("", "There is a user with such email.");
+                return Json(new { errors = GetErrorsFromModelState() });
             }
             if (accountService.AccountExists(model.PhoneNumber, LogInType.PhoneNumber))
             {
-                ModelState.AddModelError("PhoneNumber", "There is a user with such phone number.");
-                flag = true;
+                ModelState.AddModelError("", "There is a user with such phone number.");
+                return Json(new { errors = GetErrorsFromModelState() });
             }
             if (model.Photo != null && model.Photo.ContentType != "image/jpeg")
             {
                 ModelState.AddModelError("", "Only .jpg photos are allowed.");
-                flag = true;
-            }
-            if (flag)
-            {
-                return RedirectToHome();
+                return Json(new { errors = GetErrorsFromModelState() });
             }
 
             var roleService = RtcDependencyResolver.GetService<IRoleService>();
@@ -77,8 +75,6 @@ namespace Rtc.Mvc.Controllers
                 roleService.CreateRole(new RoleEntity { Name = userRoleName });
                 role = roleService.GetRole(userRoleName);
             }
- 
-            
 
             var userEntity = model.ToEntity(role.Id, PhotoLoader.Load(model.Photo));
 
@@ -86,10 +82,10 @@ namespace Rtc.Mvc.Controllers
             if (provider.CreateUser(userEntity, Crypto.HashPassword(model.Password)) != null)
             {
                 FormsAuthentication.SetAuthCookie(model.Email, false);
-                return RedirectToHome();
+                return Json(new { success = true, redirect = returnUrl });
             }
             ModelState.AddModelError("", "Registration error. Try again later.");
-            return RedirectToHome();
+            return Json(new { errors = GetErrorsFromModelState() });
         }
 
         [HttpPost]
@@ -101,14 +97,9 @@ namespace Rtc.Mvc.Controllers
 
         #region Helpers
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        private IEnumerable<string> GetErrorsFromModelState()
         {
-            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToHome();
-        }
-
-        private ActionResult RedirectToHome()
-        {
-            return RedirectToAction("Index", "Home");
+            return ModelState.SelectMany(x => x.Value.Errors.Select(error => error.ErrorMessage));
         }
 
         #endregion

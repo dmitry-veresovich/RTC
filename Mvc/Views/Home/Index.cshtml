@@ -1,10 +1,10 @@
 ﻿@using Rtc.BllInterface.Entities
-@{
-    ViewBag.Title = "Welcome";
-}
+
 
 @if (User.Identity.IsAuthenticated)
 {
+    ViewBag.Title = "Welcome to RTChat";
+    
     var user = (UserEntity)ViewBag.User;
 
     <div class="row">
@@ -25,6 +25,8 @@
 }
 else
 {
+    ViewBag.Title = "Log in to RTChat";
+
     <div id="logInPartial">
         @Html.Partial("_LogIn")
     </div>
