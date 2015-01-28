@@ -1057,18 +1057,20 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\_SearchResults.cshtml" />
     <Content Include="Views\Shared\_ChattingTo.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_ChatStartPage.cshtml" />
     <Content Include="Views\Error\BadBrowser.cshtml" />
-    <Content Include="Views\Account\LogIn.cshtml" />
-    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Home\_LogIn.cshtml" />
+    <Content Include="Views\Home\_SignUp.cshtml" />
     <Content Include="Scripts\version.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Chat\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

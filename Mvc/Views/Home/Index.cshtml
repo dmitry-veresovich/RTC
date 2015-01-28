@@ -1,15 +1,40 @@
-﻿@{
+﻿@using Rtc.BllInterface.Entities
+@{
     ViewBag.Title = "Welcome";
 }
-@section body {
-    <div class="jumbotron text-center">
-        <div class="container">
-            <h1>
-                Welcome to <br>Real Time Chat!
-            </h1>
-            <br />
-            @Html.ActionLink("Log in", "LogIn", "Account", null, new { @class = "btn btn-default btn-lg" })
-            @Html.ActionLink("Sign up", "SignUp", "Account", null, new { @class = "btn btn-default btn-lg" })
+
+@if (User.Identity.IsAuthenticated)
+{
+    var user = (UserEntity)ViewBag.User;
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Partial("_FriendsBar")
+        </div>
+        <div class="col-md-9" id="chattingTo">
+            @Html.Partial("_ChatStartPage")
         </div>
     </div>
+
+    @section scripts
+    {
+        @Scripts.Render("~/bundles/signalR")
+        <script src="~/signalr/hubs"></script>
+        @Scripts.Render("~/bundles/chat")
+    }
+}
+else
+{
+    <div id="logInPartial">
+        @Html.Partial("_LogIn")
+    </div>
+    <div id="signUpPartial" style="display: none">
+        @Html.Partial("_SignUp")
+    </div>
+
+    @section scripts
+    {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/account")
+    }
 }

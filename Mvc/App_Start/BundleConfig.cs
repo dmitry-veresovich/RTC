@@ -44,6 +44,8 @@ namespace Rtc.Mvc
             bundles.Add(new ScriptBundle("~/bundles/manage").Include(
                 "~/Scripts/app/manage.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/account").Include(
+                "~/Scripts/app/account.js"));
 
         }
     }

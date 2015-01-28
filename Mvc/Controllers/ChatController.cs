@@ -22,14 +22,7 @@ namespace Rtc.Mvc.Controllers
         #endregion
 
 
-        // GET: Chat
-        public ActionResult Index()
-        {
-            SetUpFriendsPartial(accountService.GetAccount(Profile.UserName, LogInType.Email).Id);
-            return View();
-        }
-
-        [HttpPost]
+       [HttpPost]
         public ActionResult ChattingTo(int id)
         {
             if (!Request.IsAjaxRequest())
@@ -44,20 +37,5 @@ namespace Rtc.Mvc.Controllers
             ViewBag.OtherUser = accountService.GetAccount(id).ToViewModel(userFriendService.GetUserRelationsType(user.Id, id));
             return PartialView("_ChattingTo");
         }
-
-
-
-        #region Private
-
-        private void SetUpFriendsPartial(int id)
-        {
-            ViewBag.Friends = userFriendService.GetFriends(id).ToViewModel();
-            ViewBag.FollowYou = userFriendService.GetUsersFollowYou(id).ToViewModel();
-            ViewBag.YouFollow = userFriendService.GetUsersYouFollow(id).ToViewModel();
-        }
-
-        #endregion
-
-
     }
 }

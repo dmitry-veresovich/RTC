@@ -4,36 +4,33 @@
     ViewBag.Title = "Search";
 }
 
-@section body
-{
-    <h2>Search users by</h2>
-    <div class="row">
-        <div class="form-group">
-            @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { role = "search", id = "searchForm" }))
-            {
-                <div class="form-group col-md-2">
-                    @Html.EnumDropDownListFor(m => m.SearchUserKind,
+<h2>Search users by</h2>
+<div class="row">
+    <div class="form-group">
+        @using (Html.BeginForm("Index", "Users", FormMethod.Post, new { role = "search", id = "searchForm" }))
+        {
+            <div class="form-group col-md-2">
+                @Html.EnumDropDownListFor(m => m.SearchUserKind,
                         new { @class = "form-control", id = "searchUserKind", onchange = "$('#searchForm').submit()" })
-                </div>
-                <div class="form-group col-md-5">
-                    @Html.TextBoxFor(m => m.SearchToken, new
+            </div>
+            <div class="form-group col-md-5">
+                @Html.TextBoxFor(m => m.SearchToken, new
                         {
                             type = "text",
                             @class = "form-control",
                             id = "search",
                         })
-                </div>
+            </div>
 
-                <div class="form-group col-md-1">
-                    <button type="submit" id="searchBtn" data-loading-text="Searching..." class="btn btn-default">Search</button>
-                </div>
-            }
-        </div>
-
+            <div class="form-group col-md-1">
+                <button type="submit" id="searchBtn" data-loading-text="Searching..." class="btn btn-default">Search</button>
+            </div>
+        }
     </div>
 
-    <div id="results"></div>
-}
+</div>
+
+<div id="results"></div>
 
 @section scripts
 {

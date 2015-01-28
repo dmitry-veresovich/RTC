@@ -25,32 +25,20 @@ namespace Rtc.Mvc.Controllers
         #endregion
 
         [AllowAnonymous]
-        public ActionResult LogIn()
-        {
-            return Request.IsAuthenticated ? RedirectToLocal() : View();
-        }
-
-        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogIn(LogInViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+                return RedirectToHome();
             if (Membership.ValidateUser(model.LogInToken, model.Password))
             {
                 var userName = accountService.GetAccount(model.LogInToken).Email;
                 FormsAuthentication.SetAuthCookie(userName, model.RememberMe);
-                return RedirectToLocal(returnUrl);
+                return RedirectToHome();
             }
             ModelState.AddModelError("", "Wrong email or phone number and / or password.");
-            return View(model);
-        }
-
-
-        [AllowAnonymous]
-        public ActionResult SignUp()
-        {
-            return Request.IsAuthenticated ? RedirectToLocal() : View();
+            return RedirectToHome();
         }
 
         [AllowAnonymous]
@@ -58,7 +46,8 @@ namespace Rtc.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SignUp(SignUpViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+                return RedirectToHome();
             var flag = false;
             if (accountService.AccountExists(model.Email, LogInType.Email))
             {
@@ -77,7 +66,7 @@ namespace Rtc.Mvc.Controllers
             }
             if (flag)
             {
-                return View(model);
+                return RedirectToHome();
             }
 
             var roleService = RtcDependencyResolver.GetService<IRoleService>();
@@ -97,10 +86,10 @@ namespace Rtc.Mvc.Controllers
             if (provider.CreateUser(userEntity, Crypto.HashPassword(model.Password)) != null)
             {
                 FormsAuthentication.SetAuthCookie(model.Email, false);
-                return RedirectToLocal();
+                return RedirectToHome();
             }
             ModelState.AddModelError("", "Registration error. Try again later.");
-            return View(model);
+            return RedirectToHome();
         }
 
         [HttpPost]
@@ -110,16 +99,16 @@ namespace Rtc.Mvc.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        #region Private
+        #region Helpers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToLocal();
+            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : RedirectToHome();
         }
 
-        private ActionResult RedirectToLocal()
+        private ActionResult RedirectToHome()
         {
-            return RedirectToAction("Index", "Chat");
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion

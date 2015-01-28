@@ -10,7 +10,7 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div id="content" style="display: none;">
+    <div id="content" style="display: none">
         <nav class="navbar navbar-default navbar-fixed-top navbar-content" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -28,8 +28,8 @@
             </div>
         </nav>
 
-        <div class="container body-content">
-            @RenderSection("body")
+        <div class="container container-fluid body-content">
+            @RenderBody()
         </div>
 
         <footer class="navbar navbar-default navbar-fixed-bottom navbar-content" role="navigation">
