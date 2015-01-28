@@ -264,6 +264,8 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\account.js" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\usersControllers.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\app\chat.js" />
@@ -1068,7 +1070,6 @@
     <Content Include="Scripts\version.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Account\" />
     <Folder Include="Views\Chat\" />
   </ItemGroup>
   <ItemGroup>

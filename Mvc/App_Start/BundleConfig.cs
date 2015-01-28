@@ -20,6 +20,7 @@ namespace Rtc.Mvc
                 "~/Scripts/bootstrap.js"));
 
             RegisterAppScripts(bundles);
+            RegisterAngularScripts(bundles);
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
@@ -46,7 +47,15 @@ namespace Rtc.Mvc
 
             bundles.Add(new ScriptBundle("~/bundles/account").Include(
                 "~/Scripts/app/account.js"));
-
         }
+
+        private static void RegisterAngularScripts(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts/angular.js",
+                "~/Scripts/app/app.js",
+                "~/Scripts/app/usersControllers.js"));
+        }
+
     }
 }

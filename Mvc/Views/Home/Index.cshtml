@@ -1,13 +1,12 @@
 ﻿@using Rtc.BllInterface.Entities
 
-
 @if (User.Identity.IsAuthenticated)
 {
     ViewBag.Title = "Welcome to RTChat";
-    
+
     var user = (UserEntity)ViewBag.User;
 
-    <div class="row">
+    <div class="row" ng-app="app">
         <div class="col-md-3">
             @Html.Partial("_FriendsBar")
         </div>
@@ -18,6 +17,7 @@
 
     @section scripts
     {
+        @Scripts.Render("~/bundles/angular")
         @Scripts.Render("~/bundles/signalR")
         <script src="~/signalr/hubs"></script>
         @Scripts.Render("~/bundles/chat")
